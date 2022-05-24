@@ -26,14 +26,23 @@ public class Main{
         String str = "a,b,c,d,e,f,g,h";
         String[] strArr = str.split(",");
 
+        //string contains, compare
+        System.out.println(str.contains("a"));
+        System.out.println(str.compareTo("a,b,c,d,e,f,g,h") == 0);
+
+
         for (int i=0; i<strArr.length;i++){
             System.out.println(strArr[i]);
         }
 
+
+
         //strToInt
-        String a = "123";
+        String a = "123111";
         int aa = Integer.parseInt(a);
         String aaa = Integer.toString(aa);
         System.out.println(aaa);
+
+
     }   
 }
