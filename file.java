@@ -2,10 +2,24 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List; 
+
 
 
 public class Main{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
+
+        //file to List string
+        List<String> lines = Files.readAllLines(Paths.get("./tabular/qwe.txt"));         
+        System.out.println(lines.size());
+        System.out.println(lines.get(1));
+
+        //all to string
+        String fileToStringall = Files.readString(Paths.get("./tabular/qwe.txt"));         
+        System.out.println(fileToStringall);
 
         //scanner
         Scanner scanner = null;
@@ -18,7 +32,7 @@ public class Main{
               
         while (scanner.hasNext()) {            
             String str = scanner.next();            
-            System.out.println(str);        
+            //System.out.println(str);        
         }
         scanner.close();
 
