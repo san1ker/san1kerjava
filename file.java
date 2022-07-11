@@ -1,11 +1,15 @@
-import java.util.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List; 
+import java.util.ArrayList;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 
 
 
@@ -56,6 +60,18 @@ public class Main{
         int aa = Integer.parseInt(a);
         String aaa = Integer.toString(aa);
         System.out.println(aaa);
+        
+        //gson
+        Gson gson = new Gson();
+    	JsonObject jsonObject = new JsonObject();
+    	jsonObject.addProperty("name", "anna");
+    	jsonObject.addProperty("id", 1);
+    	String jsonStr = gson.toJson(jsonObject);
+    	System.out.println(jsonStr);
+    	
+    	String jsonedStr = "{\"id\":1,\"name\":\"Anna\"}";
+    	Student student = gson.fromJson(jsonedStr, Student.class);
+    	System.out.println(student.toString());
 
 
     }   
