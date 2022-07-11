@@ -59,4 +59,23 @@ public class Main{
 
 
     }   
+        //read function
+    public static String[] getTxtFromFile(String path) throws Exception{
+    	List<String> lines = Files.readAllLines(Paths.get(path));
+    	String[] array = lines.toArray(new String[0]);
+    	return array;
+    }
+    
+    //getlist function
+    public static String[] getFilesList(String path) throws Exception{
+    	List<String> results = new ArrayList<String>();
+    	File[] files = new File(path).listFiles();
+    	for (File file : files) {
+    	    if (file.isFile()) {
+    	        results.add(file.getName());
+    	    }
+    	}
+    	String[] array = results.toArray(new String[0]);
+    	return array;
+    }
 }
