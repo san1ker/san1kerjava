@@ -1,3 +1,7 @@
+//port kill
+netstat -ano | findstr :<PORT>
+taskkill /PID <PID> /F
+
 // java gson
 https://hianna.tistory.com/629
 
