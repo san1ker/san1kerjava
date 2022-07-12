@@ -47,6 +47,11 @@ public class Main{
         //string contains, compare
         System.out.println(str.contains("a"));
         System.out.println(str.compareTo("a,b,c,d,e,f,g,h") == 0);
+        String str = "This island is beautiful";
+        String[] result = str.split("is");
+        String[] result2 = str.split("\\bis\\b");
+        System.out.println(Arrays.toString(result));
+        System.out.println(Arrays.toString(result2));
 
 
         for (int i=0; i<strArr.length;i++){
