@@ -52,5 +52,41 @@ public class JsonUtil {
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
+
+        
+        // string array 받기
+        String json = "{ \"data\": [\"aaa\", \"bbb\"] }";
+
+        Gson gson = new Gson();
+        JsonObject obj = gson.fromJson(json, JsonObject.class);
+        JsonArray dataArray = obj.getAsJsonArray("data");
+
+        String[] result = new String[dataArray.size()];
+        for (int i = 0; i < dataArray.size(); i++) {
+            result[i] = dataArray.get(i).getAsString();
+        }
+
+        // 확인
+        for (String s : result) {
+            System.out.println(s);
+        }
+
+        String json = "{ \"data\": [1, 2, 3] }";
+
+        Gson gson = new Gson();
+        JsonObject obj = gson.fromJson(json, JsonObject.class);
+        JsonArray dataArray = obj.getAsJsonArray("data");
+
+        int[] result = new int[dataArray.size()];
+        for (int i = 0; i < dataArray.size(); i++) {
+            result[i] = dataArray.get(i).getAsInt();
+        }
+
+        for (int n : result) {
+            System.out.println(n);
+        }
+
+
+        
     }
 }
