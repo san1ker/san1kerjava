@@ -14,6 +14,17 @@ public class ConsoleInput {
     }
 }
 
+//////////// JSON string to servlet response body
+// https://stackoverflow.com/questions/2010990/how-do-you-return-a-json-object-from-a-java-servlet
+protected void doXxx(HttpServletRequest request, HttpServletResponse response) {
+    // ...
+    
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+    out.print(jsonString); // jsonObject.toString() 하면됨
+    out.flush();
+}
+
 
 //////////// JSON SORT
 import com.google.gson.*;
