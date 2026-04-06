@@ -1,58 +1,87 @@
-// 필요한 유틸리티(Arrays, Scanner 등) 한 번에 다 가져오기
 import java.util.*; 
+import java.io.IOException;
 
 public class Main {
 
     public static void main(String[] args) {
-        // 스캐너는 여기서 한 번만 열고 닫는 게 안전해
         Scanner scanner = new Scanner(System.in);
 
         try {
-            // 1. 콘솔에서 문제의 조건(검색어 등) 입력받기
-            System.out.print("검색할 키워드나 명령어 입력: ");
-            String keyword = scanner.nextLine();
+            // [1] 콘솔 입력 받기
+            System.out.print("검색 키워드 입력: ");
+            String keyword = scanner.nextLine().trim(); // 앞뒤 공백 제거
 
-            // 2. 파일 읽어오기 (input_data.txt 자리에 문제에서 준 파일명 넣기)
+            // [2] 데이터 파일 읽기 (LocalUtil 사용)
             String[] lines = LocalUtil.readFile("input_data.txt", true);
-            System.out.println("총 " + lines.length + "줄의 데이터를 읽어왔어.");
-
-            // ==========================================
-            // 3. ★ 핵심 로직: 쌩 배열로 파싱하기 ★
-            // ==========================================
-            // 정답을 담을 배열을 원본 데이터 크기만큼 아주 넉넉하게 생성해
-            String[] tempResult = new String[lines.length];
-            int count = 0; // 진짜로 찾은 정답 개수만 세는 카운터
             
+            // ---------------------------------------------------------
+            // ★ [작업대] 여기서부터 로직을 조립해!
+            // ---------------------------------------------------------
+            
+            String[] tempResult = new String[lines.length]; // 넉넉하게 준비
+            int count = 0; // 실제 담긴 정답 개수 카운트
+
             for (int i = 0; i < lines.length; i++) {
                 String line = lines[i];
-                
-                // [파싱 예시] 콤마로 쪼개야 한다면?
-                // String[] parts = line.split(",");
-                
-                // [조건 예시] 입력받은 키워드가 포함된 줄이라면?
+                if (line == null || line.trim().isEmpty()) continue; // 빈 줄 패스
+
+                // [여기서 아래 '실전 도구 레시피'를 보고 코딩하면 돼!]
+                // 예시: String[] p = line.split(",");
+                // 예시: if (p[1].contains(keyword)) { ... }
+
+                // (임시 로직: 키워드가 포함되면 담기)
                 if (line.contains(keyword)) {
-                    // tempResult 배열의 count 인덱스 자리에 정답 저장!
-                    tempResult[count] = "정답포함: " + line;
-                    count++; // 하나 저장했으니 카운터 1 증가
+                    tempResult[count] = line; 
+                    count++; 
                 }
             }
 
-            // ==========================================
-            // 4. ★ 배열 다이어트 (핵심) ★
-            // ==========================================
-            // 남는 빈 공간(null)을 날려버리고 딱 count 개수만큼만 새 배열로 빼냄
+            // [3] 마무리: 실제 개수만큼 배열 다이어트 (필수!)
             String[] finalResult = Arrays.copyOf(tempResult, count);
 
-            // 5. 결과를 파일로 저장하기
+            // [4] 파일 저장 및 결과 확인
             LocalUtil.writeLines(finalResult, "output.txt");
-            System.out.println("처리 완료! output.txt 파일에 총 " + count + "개의 결과가 저장됐어.");
+            LocalUtil.printStringArray(finalResult); // 배열 내용 출력 유틸
+            System.out.println(">> 총 " + count + "건 처리 완료!");
 
         } catch (Exception e) {
             System.out.println("에러 발생: " + e.getMessage());
             e.printStackTrace();
         } finally {
-            // 프로그램 끝날 때 스캐너 깔끔하게 닫아주기
-            scanner.close(); 
+            scanner.close(); // 스캐너 닫기
         }
     }
+
+    /* =============================================================
+       📚 [실전 도구 레시피] - 필요한 코드만 위 '작업대'로 복사해서 써!
+       =============================================================
+       1. 쪼개기 (Split)
+          - String[] p = line.split(",");  // 콤마 기준
+          - String[] p = line.split("\\|"); // 파이프(|) 기준 (역슬래시 2개 필수)
+
+       2. 자르기 (Substring)
+          - String sub = line.substring(0, 4); // 0번부터 3번 글자까지 ("2024")
+
+       3. 바꾸기 (Replace)
+          - String rep = line.replace("-", ""); // 하이픈 제거
+
+       4. 숫자 변환 (Convert)
+          - int num = Integer.parseInt("123");   // 문자 -> 숫자 (비교/계산용)
+          - String s = String.valueOf(123);      // 숫자 -> 문자 (합치기용)
+          - double d = Double.parseDouble("3.14"); // 문자 -> 실수
+
+       5. 비교 및 확인 (Check)
+          - boolean has = line.contains("키워드"); // 포함 여부 (true/false)
+          - boolean isSame = str.equals("Apple"); // 문자열 비교 (== 쓰지마!)
+          - boolean starts = line.startsWith("ID"); // 특정 문자로 시작하는지
+
+       6. 대소문자 & 공백 (Trim/Case)
+          - String clean = line.trim();        // 앞뒤 공백 제거
+          - String upper = line.toUpperCase(); // 대문자로 변환
+
+       7. 포맷팅 (Format)
+          - String fmt = String.format("%03d", 5);  // "005" (자릿수 맞추기)
+          - String price = String.format("%, d", 1000); // "1,000" (콤마 찍기)
+       =============================================================
+    */
 }
