@@ -26,12 +26,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 public class ServerUtil {
-    // 예쁘게 출력해주는 Gson 객체
     public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    // =========================================================
-    // 1. 제티 서버 실행
-    // =========================================================
     public static void startServer(int port) throws Exception {
         Server server = new Server();
         ServerConnector httpConnector = new ServerConnector(server);
@@ -48,9 +44,6 @@ public class ServerUtil {
         server.join();
     }
 
-    // =========================================================
-    // 2. 통합 서블릿 (클라이언트 요청을 Main으로 토스)
-    // =========================================================
     public static class MyServlet extends HttpServlet {
         private static final long serialVersionUID = 1L;
 
@@ -88,7 +81,6 @@ public class ServerUtil {
                 }
             }
             
-            // ★ Main.java 의 route 함수로 넘김 ★
             JsonObject responseJson = Main.route(method, path, requestJson);
 
             res.setStatus(200);
@@ -99,9 +91,6 @@ public class ServerUtil {
         }
     }
 
-    // =========================================================
-    // 3. 외부 API 통신 (GET & POST)
-    // =========================================================
     public static String sendGet(String urlString) throws IOException {
         URL url = new URL(urlString.startsWith("http") ? urlString : "http://" + urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -136,9 +125,6 @@ public class ServerUtil {
         return sb.toString().trim();
     }
 
-    // =========================================================
-    // 4. JSON 정렬 무기
-    // =========================================================
     public static JsonArray sortJsonArray(JsonArray inputArray, String key, String order) {
         if (inputArray == null || inputArray.size() == 0) return new JsonArray();
         List<JsonObject> list = new ArrayList<>();
