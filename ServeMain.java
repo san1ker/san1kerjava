@@ -27,6 +27,14 @@ public class Main {
                 return postResultLogic(requestData);
             }
             // 필요한 API가 있으면 여기에 else if 로 계속 추가해!
+            // --- [추가] PUT 요청 처리 ---
+            else if ("PUT".equals(method) && "/api/update".equals(path)) {
+                return putUpdateLogic(requestData);
+            }
+            // --- [추가] DELETE 요청 처리 ---
+            else if ("DELETE".equals(method) && "/api/delete".equals(path)) {
+                return deleteLogic(requestData);
+            }
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,4 +99,49 @@ public class Main {
         response.addProperty("status", "SUCCESS");
         return response; 
     }
+
+    // =================================================================
+    // [로직 3] PUT 요청 처리 (데이터 수정)
+    // =================================================================
+    private static JsonObject putUpdateLogic(JsonObject requestData) throws Exception {
+        JsonObject response = new JsonObject();
+        
+        // // 1. 수정할 대상의 ID와 바뀐 데이터를 꺼내기
+        // // 예: { "id": 1, "newName": "기계식 키보드" } 가 들어왔다고 가정
+        // int targetId = requestData.get("id").getAsInt();
+        // String newName = requestData.get("newName").getAsString();
+        
+        // System.out.println("ID " + targetId + "번 데이터를 " + newName + "(으)로 수정을 시작할게!");
+
+        // // 2. (실전 응용) 외부 DB 서버에 수정 요청 쏘기
+        // // String updateRes = ServerUtil.sendPost("127.0.0.1:9090/db/update", requestData);
+
+        // // 3. 응답 조립 (상자 조립!)
+        // response.addProperty("status", "SUCCESS");
+        // response.addProperty("updatedId", targetId);
+        // response.addProperty("message", "수정이 완료되었습니다.");
+        
+        return response; 
+    }
+
+    // =================================================================
+    // [로직 4] DELETE 요청 처리 (데이터 삭제)
+    // =================================================================
+    private static JsonObject deleteLogic(JsonObject requestData) throws Exception {
+        JsonObject response = new JsonObject();
+        
+        // // 1. 삭제할 ID 확인 (?id=1 또는 바디에 {"id":1})
+        // // 우리 ServerUtil은 GET/DELETE의 쿼리스트링도 requestData에 다 넣어주니까 똑같이 꺼내면 돼!
+        // int targetId = requestData.get("id").getAsInt();
+        
+        // System.out.println("ID " + targetId + "번 데이터를 삭제합니다.");
+
+        // // 2. 삭제 처리 결과 응답 만들기
+        // response.addProperty("status", "SUCCESS");
+        // response.addProperty("deletedId", targetId);
+        // response.addProperty("info", "데이터가 정상적으로 삭제되었습니다.");
+        
+        return response; 
+    }
+    
 }
