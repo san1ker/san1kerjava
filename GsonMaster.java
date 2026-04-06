@@ -32,31 +32,35 @@ public class GsonMaster {
         // [공식] 문자열을 일단 JsonObject(큰 상자)로 바꾼다.
         JsonObject root = ServerUtil.gson.fromJson(jsonStr, JsonObject.class);
 
-        // (A) 일반 값 꺼내기 (String, Int, Boolean)
-        // 결과: "강남점"
-        String name = root.get("storeName").getAsString(); 
+        // (A) 글자(String) 꺼내기 -> .getAsString()
+        String name = root.get("storeName").getAsString(); // 결과: "강남점"
         
         // (B) 중첩된 객체 { } 꺼내기 -> .getAsJsonObject()
-        // 결과: { "manager": "김철수", "open": true }
         JsonObject info = root.getAsJsonObject("info");
-        String manager = info.get("manager").getAsString(); // "김철수"
+        
+        // (B-1) 객체 안의 글자 꺼내기
+        String manager = info.get("manager").getAsString(); // 결과: "김철수"
+        
+        // (B-2) 객체 안의 불리언(Boolean) 꺼내기 -> .getAsBoolean() ★추가
+        boolean isOpen = info.get("open").getAsBoolean();   // 결과: true
 
         // (C) 중첩된 배열 [ ] 꺼내기 -> .getAsJsonArray()
-        // 결과: [ { "id": 1, ... }, { "id": 2, ... } ]
         JsonArray items = root.getAsJsonArray("items");
 
         // (D) 배열 반복문 돌리기 (리스트 안에 있는 것들 하나씩 요리)
         for (JsonElement el : items) {
             JsonObject item = el.getAsJsonObject(); // 배열 한 칸을 객체{}로 변환
             
+            // (D-1) 배열 안의 객체에서 숫자(Integer) 꺼내기 -> .getAsInt() ★추가
+            int id = item.get("id").getAsInt();     // 결과: 1 또는 2
+            
             String itemName = item.get("name").getAsString();
             
             // (E) 배열 속의 배열 꺼내기 (tags)
-            // 결과: ["IT", "입력"]
             JsonArray tags = item.getAsJsonArray("tags");
-            String firstTag = tags.get(0).getAsString(); // "IT"
+            String firstTag = tags.get(0).getAsString(); // "IT" 또는 "무선"
             
-            System.out.println("상품명: " + itemName + " (첫번째 태그: " + firstTag + ")");
+            System.out.println("ID: " + id + ", 상품명: " + itemName + " (첫번째 태그: " + firstTag + ")");
         }
     }
 
