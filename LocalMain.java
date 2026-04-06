@@ -82,6 +82,51 @@ public class Main {
        7. 포맷팅 (Format)
           - String fmt = String.format("%03d", 5);  // "005" (자릿수 맞추기)
           - String price = String.format("%, d", 1000); // "1,000" (콤마 찍기)
+
+      8. 날짜 쪼개기 (날짜 데이터가 "2024/05/20" 일 때)
+       String date = "2024/05/20";
+       String[] d = date.split("/"); // ["2024", "05", "20"]
+       int year = Integer.parseInt(d[0]); // 숫자로 바꿔서 크기 비교 가능
+
+        9. 수학 계산 (반올림, 올림, 절대값)
+           long rounded = Math.round(3.5); // 반올림 -> 4
+           double ceiled = Math.ceil(3.1); // 올림 -> 4.0
+           int absolute = Math.abs(-10);   // 절대값 -> 10
+
+        10. 문자열 찾기 및 존재 여부 (정밀 체크)
+           int index = line.indexOf("검색어"); // 위치 찾기 (없으면 -1)
+           boolean ends = line.endsWith(".txt"); // 확장자 확인할 때 꿀팁
+           boolean empty = line.isEmpty(); // "" 인지 확인 (길이가 0인지)
+
+        11. 문자열 합치기 (여러 변수를 하나로)
+           String join = String.join("-", "010", "1234", "5678"); // "010-1234-5678"
+           String build = "ID:" + id + " / Name:" + name; // 단순 합치기
+
+        12. 배열 정렬 (원본 유지 + 새 배열에 저장)
+           // (A) String 배열: 원본 names는 두고, sortedNames에 정렬 결과 담기
+           String[] names = {"가", "다", "나"};
+           String[] sortedNames = Arrays.copyOf(names, names.length); // 1. 복사 먼저!
+           Arrays.sort(sortedNames); // 2. 복사본만 정렬 (결과: "가", "나", "다")
+           
+           // [내림차순]도 마찬가지로 복사본을 정렬
+           String[] descNames = Arrays.copyOf(names, names.length); 
+           Arrays.sort(descNames, Collections.reverseOrder()); // (결과: "다", "나", "가")
+
+           // (B) int 배열: 원본 nums는 두고, descNums에 내림차순 결과 담기
+           int[] nums = {3, 1, 5, 2};
+           int[] temp = Arrays.copyOf(nums, nums.length); // 1. 일단 복사
+           Arrays.sort(temp); // 2. 복사본을 오름차순 정렬 {1, 2, 3, 5}
+           
+           int[] descNums = new int[temp.length]; // 3. 최종 내림차순 담을 상자
+           int idx = 0;
+           for (int i = temp.length - 1; i >= 0; i--) {
+               descNums[idx] = temp[i]; // 뒤에서부터 새 상자에 담기
+               idx++;
+           }
+           // 결과: 원본 nums는 {3, 1, 5, 2} 그대로 있고, descNums만 {5, 3, 2, 1}이 됨!
+
+        13. 꿀팁: 데이터에서 숫자만 남기기 (정규식)
+           String onlyNum = raw.replaceAll("[^0-9]", ""); // 숫자 빼고 싹 제거
        =============================================================
     */
 }
