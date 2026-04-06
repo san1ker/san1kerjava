@@ -168,4 +168,53 @@ public class ServerUtil {
         for (JsonObject obj : list) sortedArray.add(obj);
         return sortedArray;
     }
+
+    // [ServerUtil.java 안에 추가]
+
+    /**
+     * JsonObject를 예쁜 문자열로 변환해서 출력해줌
+     */
+    public static void printJsonObject(JsonObject obj) {
+        if (obj == null) {
+            System.out.println(">> [Print] JsonObject is null");
+            return;
+        }
+        // gson.toJson() 을 쓰면 설정된 대로(줄바꿈 등) 예쁘게 변환됨!
+        String jsonString = gson.toJson(obj);
+        System.out.println(">> [JsonObject] \n" + jsonString);
+    }
+    
+    /**
+     * JsonArray를 예쁜 문자열로 변환해서 출력해줌
+     */
+    public static void printJsonArray(JsonArray arr) {
+        if (arr == null) {
+            System.out.println(">> [Print] JsonArray is null");
+            return;
+        }
+        String jsonString = gson.toJson(arr);
+        System.out.println(">> [JsonArray] \n" + jsonString);
+    }
+
+    /**
+     * 꿀팁: 객체든 배열이든 상관없이 무조건 예쁘게 찍어주는 만능 출력 함수
+     */
+    public static void printJson(JsonElement element) {
+        if (element == null || element.isJsonNull()) {
+            System.out.println(">> [Print] JSON 데이터가 비어있어(null)!");
+            return;
+        }
+    
+        // 내부적으로 이게 객체인지 배열인지 판단해서 예쁘게 문자열로 바꿈
+        String prettyJson = gson.toJson(element);
+        
+        System.out.println("======================================");
+        if (element.isJsonObject()) {
+            System.out.println(">> Type: JsonObject (상자 {})");
+        } else if (element.isJsonArray()) {
+            System.out.println(">> Type: JsonArray (기차 [])");
+        }
+        System.out.println(prettyJson);
+        System.out.println("======================================");
+    }
 }
