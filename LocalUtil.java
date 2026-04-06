@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Scanner; // ★ 절대 누락 금지
 
 public class LocalUtil {
 
@@ -28,7 +28,7 @@ public class LocalUtil {
         Files.write(filePath, Arrays.asList(inpStrArr), StandardCharsets.UTF_8);
     }
 
-    // 3. 디렉토리 내 파일 목록 가져오기 (폴더 안에 txt 파일이 여러 개일 때 사용)
+    // 3. 디렉토리 내 파일 목록 가져오기 (폴더 안에 파일이 여러 개일 때 사용)
     public static String[] listFilesInDirectory(String dirPath) {
         File dir = new File(dirPath);
         if (!dir.exists() || !dir.isDirectory()) return new String[0];
@@ -41,5 +41,22 @@ public class LocalUtil {
             names[i] = files[i].getName();
         }
         return names;
+    }
+
+    // =========================================================
+    // ★ [추가된 유틸] 문자열 배열 예쁘게 출력하기 (디버깅 필수템)
+    // =========================================================
+    public static void printStringArray(String[] arr) {
+        if (arr == null || arr.length == 0) {
+            System.out.println(">> [LocalUtil] 출력할 배열이 비어있음!");
+            return;
+        }
+
+        System.out.println("---------- String Array (Size: " + arr.length + ") ----------");
+        for (int i = 0; i < arr.length; i++) {
+            // 인덱스 번호를 붙여서 몇 번째 줄인지 바로 확인 가능하게 함
+            System.out.println("[" + i + "] " + arr[i]);
+        }
+        System.out.println("--------------------------------------------------");
     }
 }
