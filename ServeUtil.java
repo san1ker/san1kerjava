@@ -56,7 +56,19 @@ public class ServerUtil {
         protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
             processRequest("POST", req, res);
         }
+        // --- [추가] PUT 방식 처리 ---
+        @Override
+        protected void doPut(HttpServletRequest req, HttpServletResponse res) throws IOException {
+            processRequest("PUT", req, res);
+        }
 
+        // --- [추가] DELETE 방식 처리 ---
+        @Override
+        protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException {
+            processRequest("DELETE", req, res);
+        }
+
+        
         private void processRequest(String method, HttpServletRequest req, HttpServletResponse res) throws IOException {
             String path = req.getRequestURI(); 
             JsonObject requestJson = new JsonObject();
