@@ -73,7 +73,7 @@ public class ServerUtil {
             String path = req.getRequestURI(); 
             JsonObject requestJson = new JsonObject();
 
-            if ("POST".equals(method)) {
+            if ("POST".equals(method) || "PUT".equals(method)) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
                 StringBuilder sb = new StringBuilder();
                 String line;
